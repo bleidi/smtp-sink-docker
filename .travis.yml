@@ -1,0 +1,13 @@
+sudo: required
+
+language: java
+
+services:
+  - docker
+
+before_install:
+  - docker build -t bleidi/smtp-sink-docker .
+  - docker run -d -p 127.0.0.1:25:25 --name smtp-sink bleidi/smtp-sink-docker
+
+script:
+  - docker ps | grep -q smtp-sink
